@@ -11,3 +11,6 @@ make clean
 make
 ```
 
+## Speed
+
+Very slow...give up
