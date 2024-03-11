@@ -1,6 +1,7 @@
-#include "operator.h"
 #include "field.hpp"
+#include "operator.hpp"
 #include "output_helper.h"
+
 
 #include <algorithm>
 #include <cmath>
@@ -52,8 +53,8 @@ int main()
     field zeta(Nx, Ny, Neumann, Neumann, Neumann, Neumann);
 
     std::stringstream ss;
-    ss << "./ib_cylinder_Re" << Re << "_Nx" << Nx << "_Ny" << Ny << "_H" << dx << "_cx" << cx << "_cy" << cy
-       << "_r" << r;
+    ss << "./ib_cylinder_Re" << Re << "_Nx" << Nx << "_Ny" << Ny << "_H" << dx << "_cx" << cx << "_cy" << cy << "_r"
+       << r;
     std::string root_dir = ss.str();
 
     if (fs::exists(root_dir))
@@ -68,15 +69,15 @@ int main()
     std::cout << "err.value() = " << err.value() << "\n"
               << " err.message() = " << err.message() << "\n";
 
-    // Left inlet
-    #pragma omp parallel for schedule(dynamic)
+// Left inlet
+#pragma omp parallel for schedule(dynamic)
     for (int j = 0; j < Ny; j++)
     {
         u.to(0, j) = 1.0;
     }
 
-    // Up and down wall
-    #pragma omp parallel for schedule(dynamic)
+// Up and down wall
+#pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < Nx; i++)
     {
         u.to(i, 0)      = 0;
@@ -87,8 +88,8 @@ int main()
 
     for (int n = 0; n <= time_step; n++)
     {
-        // Source term b calculation
-        #pragma omp parallel for schedule(dynamic)
+// Source term b calculation
+#pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < Nx; i++)
         {
             for (int j = 0; j < Ny; j++)
@@ -107,8 +108,8 @@ int main()
         for (int it = 1; it <= 50; it++)
         {
             pn = p;
-            
-            #pragma omp parallel for schedule(dynamic)
+
+#pragma omp parallel for schedule(dynamic)
             for (int i = 0; i < Nx; i++)
             {
                 for (int j = 0; j < Ny; j++)
@@ -123,8 +124,8 @@ int main()
         un = u;
         vn = v;
 
-        // Velocity update
-        #pragma omp parallel for schedule(dynamic)
+// Velocity update
+#pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < Nx; i++)
         {
             for (int j = 0; j < Ny; j++)
@@ -137,15 +138,15 @@ int main()
             }
         }
 
-        // Left inlet
-        #pragma omp parallel for schedule(dynamic)
+// Left inlet
+#pragma omp parallel for schedule(dynamic)
         for (int j = 0; j < Ny; j++)
         {
             u.to(0, j) = 1.0;
         }
 
-        // Velocity update
-        #pragma omp parallel for schedule(dynamic)
+// Velocity update
+#pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < Nx; i++)
         {
             for (int j = 0; j < Ny; j++)
@@ -157,8 +158,8 @@ int main()
             }
         }
 
-        // Up and down wall
-        #pragma omp parallel for schedule(dynamic)
+// Up and down wall
+#pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < Nx; i++)
         {
             u.to(i, 0)      = 0;
@@ -169,7 +170,7 @@ int main()
 
         if (n % output_gap == 0)
         {
-            #pragma omp parallel for schedule(dynamic)
+#pragma omp parallel for schedule(dynamic)
             for (int i = 0; i < Nx; i++)
             {
                 for (int j = 0; j < Ny; j++)

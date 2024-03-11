@@ -1,4 +1,6 @@
-#include "operator.h"
+#pragma once
+
+#include "field.hpp"
 
 inline double ddx(field f, int i, int j, double dx) { return (f(i + 1, j) - f(i, j)) / dx; }
 
