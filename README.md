@@ -14,3 +14,7 @@ make
 ## Speed
 
 Very slow...give up
+
+## Problem
+
+It doesn't converge...?
