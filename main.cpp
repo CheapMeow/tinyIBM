@@ -1,7 +1,7 @@
 #include "field.hpp"
 #include "operator.hpp"
 #include "output_helper.h"
-
+#include "scope_timer.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -88,6 +88,8 @@ int main()
 
     for (int n = 0; n <= time_step; n++)
     {
+        BeginScopeTimer("one iteration");
+
 // Source term b calculation
 #pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < Nx; i++)
