@@ -1,7 +1,5 @@
 #pragma once
 
-#include "field.hpp"
-
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -24,4 +22,4 @@ namespace fs = boost::filesystem;
 #    endif
 #endif
 
-void field_output(field& _field, std::string root_dir, std::string label, int ind);
+void field_output(std::vector<std::vector<double>>& field, std::string root_dir, std::string label, int ind);

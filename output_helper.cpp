@@ -1,7 +1,7 @@
 #include "output_helper.h"
 #include "scope_timer.hpp"
 
-void field_output(field& _field, std::string root_dir, std::string label, int ind)
+void field_output(std::vector<std::vector<double>>& field, std::string root_dir, std::string label, int ind)
 {
     BeginScopeTimer("field_output(...)");
 
@@ -23,17 +23,17 @@ void field_output(field& _field, std::string root_dir, std::string label, int in
 
     std::ofstream outfile;
     outfile.open(output_filename, std::ios::out);
-    for (int i = 0; i < _field.Nx; i++)
+    for (int i = 0; i < field.size(); i++)
     {
-        for (int j = 0; j < _field.Ny; j++)
+        for (int j = 0; j < field[0].size(); j++)
         {
-            if (j == (_field.Ny - 1))
+            if (j == (field[0].size() - 1))
             {
-                outfile << _field(i, j) << std::endl;
+                outfile << field[i][j] << std::endl;
             }
             else
             {
-                outfile << _field(i, j) << ",";
+                outfile << field[i][j] << ",";
             }
         }
     }
